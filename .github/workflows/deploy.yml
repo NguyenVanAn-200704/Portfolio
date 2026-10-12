@@ -1,0 +1,52 @@
+# Deploy portfolio tĩnh lên GitHub Pages mỗi khi push vào main.
+# Lần đầu: vào Settings → Pages → Source, chọn "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Chỉ chạy một lần deploy tại một thời điểm, không hủy lần đang chạy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Chỉ đưa các file của trang web vào bản deploy (bỏ .claude, .github, README...)
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          cp index.html styles.css script.js i18n.js _site/
+          if [ -d assets ]; then cp -r assets _site/; fi
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
