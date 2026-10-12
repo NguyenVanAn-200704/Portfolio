@@ -7,6 +7,7 @@ const I18N_EN = {
   "nav.skills": "Skills",
   "nav.experience": "Experience",
   "nav.projects": "Projects",
+  "nav.life": "Beyond code",
   "nav.contact": "Contact",
 
   "hero.tagline": "From PRDs and AI flows to production backends, and guiding learners through every AI lab.",
@@ -61,6 +62,13 @@ const I18N_EN = {
   "proj.barber1": "Integrated the pre-trained HairFastGAN model with dlib and CUDA acceleration for virtual hairstyle previews.",
   "proj.barber2": "Built Google Calendar booking, email/OTP login, Google OAuth account linking and Socket.io customer chat.",
   "proj.barber3": "Developed loyalty, vouchers and activity-based customer segmentation with re-engagement triggers.",
+
+  "life.title": "Journeys",
+  "life.lead": "Outside of study and code, I love hiking and road trips. Here are a few moments from the roads I've travelled.",
+  "life.ig": "More on Instagram",
+  "life.peaks": "Summits",
+  "life.hills": "Highlands",
+  "life.roads": "On the road",
 
   "contact.title": "Contact",
   "contact.name": "Name",

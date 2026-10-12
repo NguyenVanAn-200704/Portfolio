@@ -191,3 +191,77 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
 })();
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* 10. Khung ảnh tự đổi (crossfade) + lightbox xem ảnh lớn.
+   Mỗi khung đổi ảnh sau INTERVAL ms, các khung lệch nhịp nhau.
+   Dừng khi rê chuột vào khung hoặc khung ra khỏi màn hình. */
+(function travelFrames() {
+  const frames = [...document.querySelectorAll(".frame")];
+  if (!frames.length) return;
+  const INTERVAL = 4200;
+  const dialog = document.getElementById("lightbox");
+
+  frames.forEach((frame, f) => {
+    const slides = [...frame.querySelectorAll(".frame__slide")];
+    const dots = [...frame.querySelectorAll(".frame__dots span")];
+    let idx = 0, timer = null, visible = false, hovered = false;
+
+    function go(i) {
+      slides[idx].classList.remove("is-active");
+      dots[idx] && dots[idx].classList.remove("is-active");
+      idx = (i + slides.length) % slides.length;
+      const img = slides[idx];
+      img.loading = "eager";
+      img.classList.add("is-active");
+      dots[idx] && dots[idx].classList.add("is-active");
+      slides[(idx + 1) % slides.length].loading = "eager"; // tải trước ảnh kế tiếp
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (REDUCED_MOTION || !visible || hovered || slides.length < 2) return;
+      timer = setTimeout(() => { go(idx + 1); schedule(); }, INTERVAL);
+    }
+    go(0);
+
+    // Khung sau bắt đầu trễ hơn khung trước để không đổi ảnh cùng lúc
+    const offset = f * 1400;
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) setTimeout(schedule, offset); else clearTimeout(timer);
+    }, { threshold: 0.2 }).observe(frame);
+    frame.addEventListener("mouseenter", () => { hovered = true; clearTimeout(timer); });
+    frame.addEventListener("mouseleave", () => { hovered = false; schedule(); });
+
+    frame.querySelector(".frame__stage").addEventListener("click", () => {
+      if (dialog && dialog.showModal) openLightbox(slides[idx]);
+    });
+  });
+
+  // ---- Lightbox: duyệt qua toàn bộ ảnh của cả 3 khung ----
+  const all = [...document.querySelectorAll(".frame__slide")];
+  if (!dialog || !dialog.showModal) return;
+  const view = dialog.querySelector("img");
+  let cur = 0, lastFocus = null;
+
+  function show(i) {
+    cur = (i + all.length) % all.length;
+    const s = all[cur];
+    view.src = s.getAttribute("src");
+    view.alt = document.documentElement.lang === "en" ? s.dataset.altEn : s.alt;
+  }
+  function openLightbox(slide) {
+    lastFocus = document.activeElement;
+    show(all.indexOf(slide));
+    dialog.showModal();
+  }
+
+  dialog.querySelector(".lightbox__close").addEventListener("click", () => dialog.close());
+  dialog.querySelector(".lightbox__prev").addEventListener("click", () => show(cur - 1));
+  dialog.querySelector(".lightbox__next").addEventListener("click", () => show(cur + 1));
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  dialog.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") show(cur - 1);
+    if (e.key === "ArrowRight") show(cur + 1);
+  });
+  dialog.addEventListener("close", () => lastFocus && lastFocus.focus());
+})();

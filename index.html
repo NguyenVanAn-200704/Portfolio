@@ -30,6 +30,7 @@
         <a href="#skills" class="nav__link" data-i18n="nav.skills">Kỹ năng</a>
         <a href="#experience" class="nav__link" data-i18n="nav.experience">Kinh nghiệm</a>
         <a href="#projects" class="nav__link" data-i18n="nav.projects">Dự án</a>
+        <a href="#life" class="nav__link" data-i18n="nav.life">Ngoài giờ</a>
         <a href="#contact" class="nav__link nav__link--cta" data-i18n="nav.contact">Liên hệ</a>
         <button class="nav__lang mono" id="langToggle" aria-label="Switch language">EN</button>
       </nav>
@@ -266,11 +267,61 @@
       </div>
     </section>
 
+    <!-- ================= LIFE / GALLERY ================= -->
+    <section class="section" id="life">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__num mono">05</span>
+          <h2 class="section__title" data-i18n="life.title">Những chuyến đi</h2>
+        </div>
+        <div class="life__intro reveal">
+          <p data-i18n="life.lead">Ngoài giờ học và code, tôi thích leo núi và đi phượt. Đây là một vài khoảnh khắc trên những cung đường đã qua.</p>
+          <a href="https://www.instagram.com/nva2004_gl81/" target="_blank" rel="noopener" class="link-arrow"><span data-i18n="life.ig">Xem thêm trên Instagram</span> <span>↗</span></a>
+        </div>
+        <div class="frames">
+          <figure class="frame frame--peaks reveal">
+            <button type="button" class="frame__stage" aria-label="Đỉnh núi">
+              <img class="frame__slide is-active" src="assets/trips/trip-01.jpg" alt="Giương cờ trên đỉnh núi cùng bạn" data-alt-en="Holding the flag on a summit with a friend" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-05.jpg" alt="Tạo dáng bên lá cờ trên đỉnh núi" data-alt-en="Posing by the flag on a summit" loading="lazy" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-04.jpg" alt="Cả nhóm trên đỉnh núi" data-alt-en="The crew on a summit" loading="lazy" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-06.jpg" alt="Ngắm biển mây bên cột cờ" data-alt-en="Looking out over the clouds by the flagpole" loading="lazy" decoding="async" width="1200" height="1600">
+            </button>
+            <figcaption class="frame__caption">
+              <span class="mono" data-i18n="life.peaks">Đỉnh núi</span>
+              <span class="frame__dots" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            </figcaption>
+          </figure>
+          <figure class="frame frame--hills reveal">
+            <button type="button" class="frame__stage" aria-label="Núi rừng">
+              <img class="frame__slide is-active" src="assets/trips/trip-08.jpg" alt="Đứng giữa núi đồi với khăn thổ cẩm" data-alt-en="Among the hills in a brocade scarf" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-09.jpg" alt="Ngồi trên mỏm đá giữa núi rừng" data-alt-en="Sitting on a rock above the valley" loading="lazy" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-07.jpg" alt="Ngắm thung lũng dưới chân cột cờ" data-alt-en="Looking over the valley below the flagpole" loading="lazy" decoding="async" width="1200" height="1600">
+            </button>
+            <figcaption class="frame__caption">
+              <span class="mono" data-i18n="life.hills">Núi rừng</span>
+              <span class="frame__dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </figcaption>
+          </figure>
+          <figure class="frame frame--roads reveal">
+            <button type="button" class="frame__stage" aria-label="Trên đường">
+              <img class="frame__slide is-active" src="assets/trips/trip-10.jpg" alt="Ngắm hoàng hôn trên biển" data-alt-en="Watching the sunset over the sea" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-02.jpg" alt="Dạo phố vùng núi" data-alt-en="Strolling a mountain town" loading="lazy" decoding="async" width="1200" height="1600">
+              <img class="frame__slide" src="assets/trips/trip-03.jpg" alt="Nghỉ chân trong rừng" data-alt-en="Resting in the forest" loading="lazy" decoding="async" width="1200" height="1600">
+            </button>
+            <figcaption class="frame__caption">
+              <span class="mono" data-i18n="life.roads">Trên đường</span>
+              <span class="frame__dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= CONTACT ================= -->
     <section class="section" id="contact">
       <div class="container">
         <div class="section__head reveal">
-          <span class="section__num mono">05</span>
+          <span class="section__num mono">06</span>
           <h2 class="section__title" data-i18n="contact.title">Liên hệ</h2>
         </div>
 
@@ -296,6 +347,14 @@
       </div>
     </section>
   </main>
+
+  <!-- Lightbox xem ảnh lớn -->
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+    <img alt="">
+    <button type="button" class="lightbox__btn lightbox__close" aria-label="Close">✕</button>
+    <button type="button" class="lightbox__btn lightbox__prev" aria-label="Previous">‹</button>
+    <button type="button" class="lightbox__btn lightbox__next" aria-label="Next">›</button>
+  </dialog>
 
   <footer class="footer">
     <div class="container footer__inner">

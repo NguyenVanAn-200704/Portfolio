@@ -336,3 +336,74 @@ ul, ol { list-style: none; }
   .reveal, .hero__name .word { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ============================ GALLERY ============================ */
+.life__intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin: -24px 0 32px; }
+.life__intro p { color: var(--text-muted); max-width: 560px; }
+
+/* 3 khung ảnh; ảnh trong mỗi khung tự đổi bằng crossfade (script.js #10) */
+.frames { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 18px; align-items: start; }
+.frame { margin: 0; }
+.frame--hills { margin-top: 48px; }          /* lệch nhịp cho bố cục bớt cứng */
+.frame--roads { margin-top: 16px; }
+.frame__stage {
+  position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--bg-raised); cursor: zoom-in;
+  box-shadow: 0 0 0 6px var(--bg-raised), 0 0 0 7px var(--line);   /* viền khung kép */
+  transition: box-shadow var(--dur) var(--ease);
+}
+.frame__stage:hover, .frame__stage:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 6px var(--bg-raised), 0 0 0 7px var(--accent);
+}
+.frame__slide {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.08);
+  transition: opacity 1.2s ease, transform 6s ease-out;
+}
+.frame__slide.is-active { opacity: 1; transform: scale(1); }
+.frame__caption {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 16px; color: var(--text-muted);
+}
+.frame__dots { display: flex; gap: 6px; }
+.frame__dots span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--line);
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.frame__dots span.is-active { background: var(--accent); transform: scale(1.3); }
+
+.lightbox {
+  border: 0; padding: 0; background: transparent;
+  width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; margin: 0;
+}
+.lightbox[open] { display: grid; place-items: center; }
+.lightbox::backdrop { background: rgba(8, 9, 10, 0.92); backdrop-filter: blur(4px); }
+.lightbox img { max-width: min(92vw, 1000px); max-height: 86dvh; width: auto; height: auto; border-radius: var(--radius); }
+.lightbox__btn {
+  position: fixed; width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--line); background: rgba(21, 23, 27, 0.8); color: var(--text);
+  font-size: 1.3rem; line-height: 1; cursor: pointer; display: grid; place-items: center;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.lightbox__btn:hover { background: var(--accent); color: var(--bg); }
+.lightbox__close { top: 16px; right: 16px; }
+.lightbox__prev { left: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox__next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+@media (max-width: 760px) {
+  .frames { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .frame--peaks { grid-column: 1 / -1; }
+  .frame--peaks .frame__stage { aspect-ratio: 4 / 5; }
+  .frame--hills, .frame--roads { margin-top: 0; }
+  .frame__caption { margin-top: 12px; }
+  .life__intro { margin-top: -32px; }
+  .lightbox__prev, .lightbox__next { top: auto; bottom: 20px; transform: none; }
+  .lightbox__prev { left: calc(50% - 56px); }
+  .lightbox__next { right: calc(50% - 56px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame__slide { transition: none; transform: none; }
+}
