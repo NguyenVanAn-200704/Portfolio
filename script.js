@@ -1,6 +1,7 @@
 /* ============================================================
    PORTFOLIO - script.js
-   Mỗi khối độc lập; tất cả tôn trọng prefers-reduced-motion.
+   Mỗi khối độc lập. Khi máy bật "Giảm chuyển động" (prefers-reduced-motion)
+   chỉ tắt các hiệu ứng di chuyển; hiệu ứng mờ dần và đổi ảnh vẫn chạy.
    ============================================================ */
 
 const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -22,8 +23,6 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   const textEl = el.querySelector(".hero__role-text");
   const roles = JSON.parse(el.dataset.roles || "[]");
   if (!roles.length) return;
-  if (REDUCED_MOTION) { textEl.textContent = roles[0]; return; }
-
   let roleIdx = 0, charIdx = 0, deleting = false;
   function tick() {
     const current = roles[roleIdx];
@@ -112,7 +111,7 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
 /* 5. Reveal khi cuộn */
 (function scrollReveal() {
   const items = document.querySelectorAll(".reveal");
-  if (REDUCED_MOTION || !("IntersectionObserver" in window)) {
+  if (!("IntersectionObserver" in window)) {
     items.forEach((el) => el.classList.add("is-visible"));
     return;
   }
@@ -221,7 +220,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
   }
   function schedule() {
     clearTimeout(timer);
-    if (REDUCED_MOTION || !visible) return;
+    if (!visible) return;
     timer = setTimeout(() => { step(); schedule(); }, STEP_MS);
   }
   render();

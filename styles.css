@@ -331,10 +331,13 @@ ul, ol { list-style: none; }
   .skill-card, .project { padding: 22px; }
 }
 
+/* Máy bật "Giảm chuyển động": bỏ hiệu ứng di chuyển (trôi, xoay, trượt, nhấc lên),
+   vẫn giữ hiệu ứng mờ dần, đổi màu và chữ gõ để trang không bị "đứng hình". */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal, .hero__name .word { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
+  .hero__bg, .avatar__ring { animation: none; }
+  .reveal { transform: none; transition: opacity 0.8s ease; }
+  .btn:hover, .project:hover, .socials a:hover { transform: none; }
 }
 
 /* ============================ GALLERY ============================ */
@@ -405,5 +408,5 @@ ul, ol { list-style: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .frame__slide { transition: none; transform: none; }
+  .frame__slide, .frame__slide.is-active { transform: none; transition: opacity 0.9s ease; }
 }
