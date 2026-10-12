@@ -192,71 +192,63 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* 10. Khung ảnh tự đổi (crossfade) + lightbox xem ảnh lớn.
-   Mỗi khung đổi ảnh sau INTERVAL ms, các khung lệch nhịp nhau.
-   Dừng khi rê chuột vào khung hoặc khung ra khỏi màn hình. */
+/* 10. Ba khung ảnh dùng chung một dãy 10 ảnh.
+   Ban đầu 3 khung hiện vị trí 1, 2, 3. Cứ STEP_MS lại đổi MỘT khung (lần lượt khung 1 -> 2 -> 3)
+   sang ảnh kế tiếp chưa hiện: 1->4, rồi 2->5, rồi 3->6... hết 10 thì quay lại 1.
+   Hàng 10 chấm bên dưới sáng đúng 3 vị trí đang hiện.
+   Tạm dừng khi khu ảnh ra khỏi màn hình. */
 (function travelFrames() {
-  const frames = [...document.querySelectorAll(".frame")];
-  if (!frames.length) return;
-  const INTERVAL = 4200;
+  const wrap = document.querySelector(".frames");
+  if (!wrap) return;
+  const STEP_MS = 2000;
+  const frames = [...wrap.querySelectorAll(".frame")];
+  const slidesOf = frames.map((f) => [...f.querySelectorAll(".frame__slide")]);
+  const dots = [...document.querySelectorAll(".frames__dots span")];
+  const total = slidesOf[0].length;
+  const pos = frames.map((_, k) => k);  // vị trí ảnh đang hiện của từng khung
+  let turn = 0, nextPos = frames.length, timer = null, visible = false;
+
+  function render() {
+    frames.forEach((_, k) => slidesOf[k].forEach((img, i) => img.classList.toggle("is-active", i === pos[k])));
+    dots.forEach((d, i) => d.classList.toggle("is-active", pos.includes(i)));
+  }
+  function step() {
+    pos[turn] = nextPos;
+    nextPos = (nextPos + 1) % total;
+    slidesOf[turn][(pos[turn] + frames.length) % total].loading = "eager"; // tải trước ảnh khung này cần lần sau
+    turn = (turn + 1) % frames.length;
+    render();
+  }
+  function schedule() {
+    clearTimeout(timer);
+    if (REDUCED_MOTION || !visible) return;
+    timer = setTimeout(() => { step(); schedule(); }, STEP_MS);
+  }
+  render();
+  frames.forEach((_, k) => { slidesOf[k][(k + frames.length) % total].loading = "eager"; });
+
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    visible ? schedule() : clearTimeout(timer);
+  }, { threshold: 0.2 }).observe(wrap);
+
+  // ---- Lightbox: mở ảnh đang hiện của khung được bấm, duyệt cả dãy 10 ảnh ----
   const dialog = document.getElementById("lightbox");
-
-  frames.forEach((frame, f) => {
-    const slides = [...frame.querySelectorAll(".frame__slide")];
-    const dots = [...frame.querySelectorAll(".frame__dots span")];
-    let idx = 0, timer = null, visible = false, hovered = false;
-
-    function go(i) {
-      slides[idx].classList.remove("is-active");
-      dots[idx] && dots[idx].classList.remove("is-active");
-      idx = (i + slides.length) % slides.length;
-      const img = slides[idx];
-      img.loading = "eager";
-      img.classList.add("is-active");
-      dots[idx] && dots[idx].classList.add("is-active");
-      slides[(idx + 1) % slides.length].loading = "eager"; // tải trước ảnh kế tiếp
-    }
-    function schedule() {
-      clearTimeout(timer);
-      if (REDUCED_MOTION || !visible || hovered || slides.length < 2) return;
-      timer = setTimeout(() => { go(idx + 1); schedule(); }, INTERVAL);
-    }
-    go(0);
-
-    // Khung sau bắt đầu trễ hơn khung trước để không đổi ảnh cùng lúc
-    const offset = f * 1400;
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible) setTimeout(schedule, offset); else clearTimeout(timer);
-    }, { threshold: 0.2 }).observe(frame);
-    frame.addEventListener("mouseenter", () => { hovered = true; clearTimeout(timer); });
-    frame.addEventListener("mouseleave", () => { hovered = false; schedule(); });
-
-    frame.querySelector(".frame__stage").addEventListener("click", () => {
-      if (dialog && dialog.showModal) openLightbox(slides[idx]);
-    });
-  });
-
-  // ---- Lightbox: duyệt qua toàn bộ ảnh của cả 3 khung ----
-  // Mỗi khung chứa đủ 10 ảnh, nên lấy danh sách không trùng theo thứ tự khung đầu tiên
-  const all = [...frames[0].querySelectorAll(".frame__slide")];
-  const indexOf = (slide) => all.findIndex((s) => s.getAttribute("src") === slide.getAttribute("src"));
   if (!dialog || !dialog.showModal) return;
+  const all = slidesOf[0];
   const view = dialog.querySelector("img");
   let cur = 0, lastFocus = null;
 
   function show(i) {
-    cur = (i + all.length) % all.length;
-    const s = all[cur];
-    view.src = s.getAttribute("src");
-    view.alt = document.documentElement.lang === "en" ? s.dataset.altEn : s.alt;
+    cur = (i + total) % total;
+    view.src = all[cur].getAttribute("src");
+    view.alt = document.documentElement.lang === "en" ? all[cur].dataset.altEn : all[cur].alt;
   }
-  function openLightbox(slide) {
+  frames.forEach((f, k) => f.querySelector(".frame__stage").addEventListener("click", () => {
     lastFocus = document.activeElement;
-    show(indexOf(slide));
+    show(pos[k]);
     dialog.showModal();
-  }
-
+  }));
   dialog.querySelector(".lightbox__close").addEventListener("click", () => dialog.close());
   dialog.querySelector(".lightbox__prev").addEventListener("click", () => show(cur - 1));
   dialog.querySelector(".lightbox__next").addEventListener("click", () => show(cur + 1));
