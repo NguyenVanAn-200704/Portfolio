@@ -238,7 +238,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
   });
 
   // ---- Lightbox: duyệt qua toàn bộ ảnh của cả 3 khung ----
-  const all = [...document.querySelectorAll(".frame__slide")];
+  // Mỗi khung chứa đủ 10 ảnh, nên lấy danh sách không trùng theo thứ tự khung đầu tiên
+  const all = [...frames[0].querySelectorAll(".frame__slide")];
+  const indexOf = (slide) => all.findIndex((s) => s.getAttribute("src") === slide.getAttribute("src"));
   if (!dialog || !dialog.showModal) return;
   const view = dialog.querySelector("img");
   let cur = 0, lastFocus = null;
@@ -251,7 +253,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
   }
   function openLightbox(slide) {
     lastFocus = document.activeElement;
-    show(all.indexOf(slide));
+    show(indexOf(slide));
     dialog.showModal();
   }
 

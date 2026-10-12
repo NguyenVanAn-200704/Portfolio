@@ -66,9 +66,9 @@ const I18N_EN = {
   "life.title": "Journeys",
   "life.lead": "Outside of study and code, I love hiking and road trips. Here are a few moments from the roads I've travelled.",
   "life.ig": "More on Instagram",
-  "life.peaks": "Summits",
-  "life.hills": "Highlands",
-  "life.roads": "On the road",
+  "life.dynamic": "Energetic",
+  "life.sincere": "Sincere",
+  "life.humor": "Humorous",
 
   "contact.title": "Contact",
   "contact.name": "Name",

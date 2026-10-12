@@ -344,8 +344,8 @@ ul, ol { list-style: none; }
 /* 3 khung ảnh; ảnh trong mỗi khung tự đổi bằng crossfade (script.js #10) */
 .frames { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 18px; align-items: start; }
 .frame { margin: 0; }
-.frame--hills { margin-top: 48px; }          /* lệch nhịp cho bố cục bớt cứng */
-.frame--roads { margin-top: 16px; }
+.frame--sincere { margin-top: 48px; }          /* lệch nhịp cho bố cục bớt cứng */
+.frame--humor { margin-top: 16px; }
 .frame__stage {
   position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0;
   border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
@@ -367,7 +367,8 @@ ul, ol { list-style: none; }
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 16px; color: var(--text-muted);
 }
-.frame__dots { display: flex; gap: 6px; }
+.frame__label { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--text); }
+.frame__dots { display: flex; gap: 5px; }
 .frame__dots span {
   width: 6px; height: 6px; border-radius: 50%; background: var(--line);
   transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
@@ -394,9 +395,9 @@ ul, ol { list-style: none; }
 
 @media (max-width: 760px) {
   .frames { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .frame--peaks { grid-column: 1 / -1; }
-  .frame--peaks .frame__stage { aspect-ratio: 4 / 5; }
-  .frame--hills, .frame--roads { margin-top: 0; }
+  .frame--dynamic { grid-column: 1 / -1; }
+  .frame--dynamic .frame__stage { aspect-ratio: 4 / 5; }
+  .frame--sincere, .frame--humor { margin-top: 0; }
   .frame__caption { margin-top: 12px; }
   .life__intro { margin-top: -32px; }
   .lightbox__prev, .lightbox__next { top: auto; bottom: 20px; transform: none; }
