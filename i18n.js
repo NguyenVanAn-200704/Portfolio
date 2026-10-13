@@ -71,9 +71,9 @@ const I18N_EN = {
   "life.humor": "Humorous",
 
   "contact.title": "Contact",
-  "contact.name": "Name",
-  "contact.msg": "Message",
-  "contact.send": "Send message",
   "contact.lead": "Happy to talk about the Lab Coach role, AI internships or AI agent projects.",
-  "contact.zalo": "Zalo business card"
+  "contact.copy": "Copy",
+  "contact.copied": "Copied",
+  "contact.qrTitle": "Scan to add me on Zalo",
+  "contact.openZalo": "Open Zalo"
 };

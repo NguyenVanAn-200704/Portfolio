@@ -176,16 +176,28 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   btn.addEventListener("click", () => apply(document.documentElement.lang === "en" ? "vi" : "en"));
 })();
 
-/* 9. Form liên hệ: mở ứng dụng email với nội dung đã điền */
-(function contactForm() {
-  const form = document.getElementById("contactForm");
-  if (!form) return;
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const subject = encodeURIComponent(`Portfolio - ${data.get("name")}`);
-    const body = encodeURIComponent(`${data.get("message")}\n\n${data.get("name")} · ${data.get("email")}`);
-    window.location.href = `mailto:nva2004gl81@gmail.com?subject=${subject}&body=${body}`;
+/* 9. Nút "Sao chép" email (cho điện thoại không có app mail) */
+(function copyEmail() {
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const text = btn.dataset.copy;
+      // Chép bằng ô nhập tạm (chạy cả khi Clipboard API bị chặn), rồi thử thêm Clipboard API
+      const tmp = Object.assign(document.createElement("textarea"), { value: text });
+      tmp.setAttribute("readonly", ""); tmp.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(tmp); tmp.select();
+      try { document.execCommand("copy"); } catch (err) {}
+      tmp.remove();
+      if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+
+      const en = document.documentElement.lang === "en";
+      btn.textContent = en ? I18N_EN["contact.copied"] : "Đã chép";
+      btn.classList.add("is-done");
+      clearTimeout(btn._t);
+      btn._t = setTimeout(() => {
+        btn.textContent = document.documentElement.lang === "en" ? I18N_EN["contact.copy"] : "Sao chép";
+        btn.classList.remove("is-done");
+      }, 2000);
+    });
   });
 })();
 
