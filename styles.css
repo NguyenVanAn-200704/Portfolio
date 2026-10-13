@@ -286,6 +286,8 @@ ul, ol { list-style: none; }
 .contact__info li span { color: var(--text-muted); }
 .contact__info li a { transition: color var(--dur) var(--ease); word-break: break-all; }
 .contact__info li a:hover { color: var(--accent); }
+.contact__qr { justify-self: start; margin-top: 10px; padding: 8px; background: #fff; border-radius: 10px; line-height: 0; }
+.contact__qr img { width: 140px; height: 140px; }
 
 .footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--text-muted); }
 .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
