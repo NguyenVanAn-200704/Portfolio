@@ -74,6 +74,5 @@ const I18N_EN = {
   "contact.name": "Name",
   "contact.msg": "Message",
   "contact.send": "Send message",
-  "contact.lead": "Happy to talk about the Lab Coach role, AI internships or AI agent projects.",
-  "contact.phone": "Phone"
+  "contact.lead": "Happy to talk about the Lab Coach role, AI internships or AI agent projects."
 };
