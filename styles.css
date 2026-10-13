@@ -312,8 +312,6 @@ ul, ol { list-style: none; }
 .contact-qr__hint { color: var(--text-muted); font-size: 0.75rem; margin-top: -8px; }
 .contact-qr .btn { gap: 8px; }
 
-.footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--text-muted); }
-.footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
 /* Icon mạng xã hội: vòng tròn viền mảnh, hover đổi sang accent */
 .socials { display: flex; gap: 12px; margin-top: 28px; }
@@ -326,9 +324,6 @@ ul, ol { list-style: none; }
 }
 .socials svg { width: 18px; height: 18px; }
 .socials a:hover { color: var(--bg); background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
-.socials--sm { margin-top: 0; gap: 8px; }
-.socials--sm a { width: 34px; height: 34px; }
-.socials--sm svg { width: 15px; height: 15px; }
 
 /* ============================ RESPONSIVE ============================ */
 @media (max-width: 900px) {

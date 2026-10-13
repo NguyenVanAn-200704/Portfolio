@@ -201,8 +201,6 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   });
 })();
 
-document.getElementById("year").textContent = new Date().getFullYear();
-
 /* 10. Ba khung ảnh dùng chung một dãy 10 ảnh.
    Ban đầu 3 khung hiện vị trí 1, 2, 3. Cứ STEP_MS lại đổi MỘT khung (lần lượt khung 1 -> 2 -> 3)
    sang ảnh kế tiếp chưa hiện: 1->4, rồi 2->5, rồi 3->6... hết 10 thì quay lại 1.
