@@ -74,6 +74,7 @@ const I18N_EN = {
   "contact.lead": "Happy to talk about the Lab Coach role, AI internships or AI agent projects.",
   "contact.copy": "Copy",
   "contact.copied": "Copied",
-  "contact.qrTitle": "Scan to add me on Zalo",
+  "contact.qrTitle": "Scan with the Zalo app to add me",
+  "contact.qrHint": "Open Zalo → Scan QR code",
   "contact.openZalo": "Open Zalo"
 };

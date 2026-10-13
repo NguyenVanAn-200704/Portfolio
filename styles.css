@@ -309,6 +309,7 @@ ul, ol { list-style: none; }
 .contact-qr__img:hover { transform: scale(1.03); }
 .contact-qr__img img { width: 180px; height: 180px; }
 .contact-qr__title { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; }
+.contact-qr__hint { color: var(--text-muted); font-size: 0.75rem; margin-top: -8px; }
 .contact-qr .btn { gap: 8px; }
 
 .footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--text-muted); }
