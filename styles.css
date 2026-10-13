@@ -192,6 +192,12 @@ ul, ol { list-style: none; }
 
 /* ============================ SECTIONS ============================ */
 .section { padding: 120px 0; border-top: 1px solid var(--line); }
+/* Mục cuối (Liên hệ) cao tối thiểu 1 màn hình: cuộn hết trang vẫn thấy tiêu đề, không dư khoảng trắng */
+#contact {
+  min-height: calc(100dvh - var(--nav-h)); padding: 56px 0 40px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+#contact .section__head { margin-bottom: 28px; }
 .section__head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 56px; }
 .section__num { color: var(--accent); }
 .section__title {
