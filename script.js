@@ -176,6 +176,22 @@ const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   btn.addEventListener("click", () => apply(document.documentElement.lang === "en" ? "vi" : "en"));
 })();
 
+/* 8b. Bấm Email: máy tính mở tab Gmail soạn thư (điền sẵn người nhận + tiêu đề);
+   điện thoại giữ mailto: để mở app Gmail / Mail. */
+(function composeEmail() {
+  const desktop = window.matchMedia("(hover: hover) and (pointer: fine)");
+  document.querySelectorAll("a[data-compose]").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      if (!desktop.matches) return;
+      e.preventDefault();
+      const to = decodeURIComponent(a.getAttribute("href").slice(7).split("?")[0]);
+      const subject = document.documentElement.lang === "en" ? I18N_EN["contact.subject"] : "Liên hệ từ Portfolio";
+      const url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(to) + "&su=" + encodeURIComponent(subject);
+      window.open(url, "_blank", "noopener");
+    });
+  });
+})();
+
 /* 9. Nút "Sao chép" email (cho điện thoại không có app mail) */
 (function copyEmail() {
   document.querySelectorAll("[data-copy]").forEach((btn) => {

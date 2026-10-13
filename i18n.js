@@ -72,6 +72,7 @@ const I18N_EN = {
 
   "contact.title": "Contact",
   "contact.lead": "Happy to talk about the Lab Coach role, AI internships or AI agent projects.",
+  "contact.subject": "Contact from Portfolio",
   "contact.copy": "Copy",
   "contact.copied": "Copied",
   "contact.qrTitle": "Scan with the Zalo app to add me",
